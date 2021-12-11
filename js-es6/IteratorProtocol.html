@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>learn-es6</title>
+</head>
+<body>
+
+</body>
+</html>
+
+<script>
+    const log = console.log;
+</script>
+
+<script>
+
+    // 1. 순회
+
+    for (const a of list) {
+        log(a);
+    }
+
+
+    const arr = [1, 2, 3];
+
+    for (const a of arr) log(a);
+
+    const set = new Set([1, 2, 3]);
+
+    for (const a of set) log(a);
+
+    const map = new Map([['a', 1], ['b', 2], ['c', 3]]);
+
+    for (const a of map) log(a);
+
+    // map[Symbol.iterator];
+
+    // set, map 내장객체 이터러블 프로토콜 따름
+
+    var a = map[Symbol.iterator]();
+
+
+    map.keys();    // 이터레이터 리턴    // 키만 담아서 순회할 수 있음
+    map.values();   // 이터레이터 리턴 , 또 다시 이터레이터를 리턴해줄 수있음
+    map.entries();
+
+
+    // 2. iterator
+
+    const iterable = {
+        [Symbol.iterator]() {
+            let i = 3;
+            return {
+                next() {
+                    return i == 0 ? {done: true} : {value: i--, done: false};
+                },
+                [Symbol.iterator]() {
+                    return this;
+                }
+            }
+        }
+    }
+    let iterator = iterable[Symbol.iterator];
+
+
+    for (const a of iterable) log(a);
+
+
+    const arr2 = [1, 2, 3];
+    let iter2 = arr2[Symbol.iterator]();
+    log(iter2[Symbol.iterator]() == iter2);
+    for (const a of arr2) log(a);
+
+
+</script>
+
+<script>
+
+
+    //3. 전개연산자 (iter protocol)
+
+    console.clear();
+
+    const a = [1, 2];
+
+    // a[Symbol.iterator]=null;
+
+    log([...a, ...arr, ...set, ...map.keys()]);
+
+
+    //4. generator
+
+
+    function* infinity(i = 0) {
+        while (true) yield i++;
+    }
+
+    function* limit(l, iter) {
+        for (const a of iter) {
+            yield a;
+            if (a == l) return;
+        }
+    }
+
+    function* odds(l) {
+        for (const a of limit(l, infinity(1))) {
+            if (a % 2) yield a;
+        }
+    }
+
+    let iter3 = odds(10);
+</script>
