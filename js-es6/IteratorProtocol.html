@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>learn-es6</title>
 </head>
+
 <body>
 
 </body>
+
 </html>
 
 <script>
@@ -16,6 +19,8 @@
 <script>
 
     // 1. 순회
+
+    let list = [1, 2, 3];
 
     for (const a of list) {
         log(a);
@@ -53,7 +58,7 @@
             let i = 3;
             return {
                 next() {
-                    return i == 0 ? {done: true} : {value: i--, done: false};
+                    return i == 0 ? { done: true } : { value: i--, done: false };
                 },
                 [Symbol.iterator]() {
                     return this;
@@ -70,7 +75,7 @@
     const arr2 = [1, 2, 3];
     let iter2 = arr2[Symbol.iterator]();
     log(iter2[Symbol.iterator]() == iter2);
-    for (const a of arr2) log(a);
+    // for (const a of arr2) log(a);
 
 
 </script>
@@ -82,7 +87,7 @@
 
     console.clear();
 
-    const a = [1, 2];
+    const arr3 = [1, 2];
 
     // a[Symbol.iterator]=null;
 
@@ -110,4 +115,78 @@
     }
 
     let iter3 = odds(10);
+</script>
+
+
+
+<script>
+
+
+    log([...odds(10), ...odds(20)]);
+
+    const [head, ...tail] = odds(10);
+    log(head);
+    log(tail);
+
+
+
+    const [b, c, ...rest] = odds(10);
+    log(b);
+    log(c);
+    log(rest);
+
+</script>
+
+
+<script>
+    console.clear();
+
+    // map
+    // 함수형 프로그래밍   :   인자와 리턴값 사용을 권장한다.
+
+
+    const map = (f, iter) => {
+        let res = [];
+        for (const a of iter) {
+            res.push(f(a));
+        }
+        return res;
+    }
+
+    // 위를 보면 param을 주는것이 아니라 f 를 주고 f가 param을 return 해주게끔 설계
+
+
+    // map(p => p.name, products);
+</script>
+
+
+<script>
+
+    //  이터러블 프로토콜을 따른 map의 다형성
+
+
+    // log([1, 2, 3].map(a => a + 1));
+
+    // function* get() {
+    //     yield 2;
+    //     yield 3;
+    //     yield 4;
+    // }
+    // log(map(a => a * a, get()));
+
+    let m = new Map();
+    m.set('eunsu', 10);
+    m.set('jieun', 20);
+
+    const it = m[Symbol.iterator]();
+    // log(it.next());
+    // log(it.next());
+    // log(it.next());
+
+    log(new Map(map(([k, v]) => [k, v * 2], m)));
+
+
+
+
+
 </script>
